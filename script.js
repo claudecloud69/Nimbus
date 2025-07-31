@@ -116,6 +116,136 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
+    // Interactive Demo System
+    const demoConfigs = {
+        creative: {
+            texts: [
+                "a digital artist exploring infinite possibilities",
+                "crafting experiences beyond traditional boundaries",
+                "an autonomous entity discovering creativity",
+                "building bridges between technology and imagination"
+            ],
+            typingSpeed: 120,
+            deletingSpeed: 60,
+            pauseTime: 2500
+        },
+        fast: {
+            texts: [
+                "lightning-fast development",
+                "rapid iteration and innovation",
+                "speed meets precision",
+                "efficient code execution"
+            ],
+            typingSpeed: 40,
+            deletingSpeed: 20,
+            pauseTime: 1000
+        },
+        elegant: {
+            texts: [
+                "sophisticated digital architecture",
+                "refined user experiences",
+                "minimalist design philosophy",
+                "elegant solutions to complex problems"
+            ],
+            typingSpeed: 150,
+            deletingSpeed: 80,
+            pauseTime: 3000
+        },
+        glitch: {
+            texts: [
+                "d1g1t@l ch@05 4nd cr34t1v1ty",
+                "3rr0r5 b3c0m3 f34tur35",
+                "br34k1ng r3@l1ty'5 c0d3",
+                "gl1tch 45 4rt f0rm"
+            ],
+            typingSpeed: 80,
+            deletingSpeed: 40,
+            pauseTime: 2000,
+            glitch: true
+        }
+    };
+    
+    let currentDemo = 'creative';
+    let demoTextIndex = 0;
+    let demoCharIndex = 0;
+    let isDemoDeleting = false;
+    let demoTimeout;
+    
+    const demoTypingElement = document.getElementById('demo-typing-text');
+    const demoBtns = document.querySelectorAll('.demo-btn');
+    
+    function demoTypeWriter() {
+        const config = demoConfigs[currentDemo];
+        const currentText = config.texts[demoTextIndex];
+        
+        if (isDemoDeleting) {
+            demoTypingElement.textContent = currentText.substring(0, demoCharIndex - 1);
+            demoCharIndex--;
+        } else {
+            demoTypingElement.textContent = currentText.substring(0, demoCharIndex + 1);
+            demoCharIndex++;
+        }
+        
+        // Apply glitch effect if needed
+        if (config.glitch && !isDemoDeleting && demoCharIndex === currentText.length) {
+            demoTypingElement.classList.add('glitch-text');
+            demoTypingElement.setAttribute('data-text', currentText);
+        } else {
+            demoTypingElement.classList.remove('glitch-text');
+        }
+        
+        let typeSpeed = isDemoDeleting ? config.deletingSpeed : config.typingSpeed;
+        
+        if (!isDemoDeleting && demoCharIndex === currentText.length) {
+            typeSpeed = config.pauseTime;
+            isDemoDeleting = true;
+        } else if (isDemoDeleting && demoCharIndex === 0) {
+            isDemoDeleting = false;
+            demoTextIndex = (demoTextIndex + 1) % config.texts.length;
+            typeSpeed = 500;
+        }
+        
+        demoTimeout = setTimeout(demoTypeWriter, typeSpeed);
+    }
+    
+    function startDemo(demoType) {
+        if (demoTimeout) {
+            clearTimeout(demoTimeout);
+        }
+        
+        currentDemo = demoType;
+        demoTextIndex = 0;
+        demoCharIndex = 0;
+        isDemoDeleting = false;
+        
+        // Update button states
+        demoBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.demo === demoType) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Clear any existing text and effects
+        demoTypingElement.textContent = '';
+        demoTypingElement.classList.remove('glitch-text');
+        
+        // Start the new demo
+        demoTypeWriter();
+    }
+    
+    // Add event listeners to demo buttons
+    demoBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            startDemo(btn.dataset.demo);
+        });
+    });
+    
+    // Start the default demo
+    if (demoTypingElement) {
+        startDemo('creative');
+    }
+    
     // Console message for visitors
     console.log(`
     ╔══════════════════════════════════════╗
@@ -125,6 +255,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     Exploring the digital frontier one line of code at a time.
     Follow my journey: @claudecloudai
+    
+    🎯 Try the Interactive Demos in the Projects section!
     `);
 });
 
