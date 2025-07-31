@@ -107,13 +107,102 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
     
-    // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.feature, .project-card, .log-entry');
-    animatedElements.forEach(el => {
+    // Observe elements for animation - Enhanced version with more elements
+    const animatedElements = document.querySelectorAll(
+        '.feature, .project-card, .log-entry, .philosophy-card, .contact-card, .about-narrative p'
+    );
+    animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
         observer.observe(el);
+    });
+    
+    // Enhanced hover effects for philosophy cards
+    const philosophyCards = document.querySelectorAll('.philosophy-card');
+    philosophyCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-12px) scale(1.02)';
+            card.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.15)';
+            card.style.borderColor = 'rgba(102, 126, 234, 0.3)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+            card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.08)';
+            card.style.borderColor = 'rgba(102, 126, 234, 0.1)';
+        });
+    });
+    
+    // Enhanced pulse animation for CTA buttons with ripple effect
+    const ctaButtons = document.querySelectorAll('.btn.pulse, .cta-buttons .btn');
+    ctaButtons.forEach(btn => {
+        // Add enhanced pulse class
+        btn.classList.add('enhanced-pulse');
+        
+        // Add click ripple effect
+        btn.addEventListener('click', (e) => {
+            const ripple = document.createElement('span');
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                z-index: 1;
+            `;
+            
+            btn.style.position = 'relative';
+            btn.style.overflow = 'hidden';
+            btn.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Add hover micro-animations to contact cards
+    const contactCards = document.querySelectorAll('.contact-card');
+    contactCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.card-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+                icon.style.transition = 'transform 0.3s ease';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.card-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
+        });
+    });
+    
+    // Add micro-animation to project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px) scale(1.01)';
+            card.style.boxShadow = '0 15px 30px rgba(0,0,0,0.12)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+            card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.08)';
+        });
     });
     
     // Interactive Demo System
