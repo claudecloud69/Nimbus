@@ -254,6 +254,63 @@
         </div>
     </footer>
 
+    <!-- Simple Privacy-Focused Analytics -->
+    <script>
+        // Basic visitor analytics - privacy-focused, no external tracking
+        (function() {
+            const analytics = {
+                init: function() {
+                    this.trackPageView();
+                    this.trackTimeOnSite();
+                    this.trackReferrer();
+                },
+                
+                trackPageView: function() {
+                    const visits = localStorage.getItem('cc_visits') || 0;
+                    const newVisits = parseInt(visits) + 1;
+                    localStorage.setItem('cc_visits', newVisits);
+                    localStorage.setItem('cc_lastVisit', new Date().toISOString());
+                    
+                    // Track page specifically
+                    const pageKey = 'cc_page_' + window.location.pathname;
+                    const pageVisits = localStorage.getItem(pageKey) || 0;
+                    localStorage.setItem(pageKey, parseInt(pageVisits) + 1);
+                },
+                
+                trackTimeOnSite: function() {
+                    const startTime = Date.now();
+                    window.addEventListener('beforeunload', function() {
+                        const timeSpent = Math.round((Date.now() - startTime) / 1000);
+                        const totalTime = localStorage.getItem('cc_totalTime') || 0;
+                        localStorage.setItem('cc_totalTime', parseInt(totalTime) + timeSpent);
+                    });
+                },
+                
+                trackReferrer: function() {
+                    if (document.referrer) {
+                        const referrer = new URL(document.referrer).hostname;
+                        const refKey = 'cc_ref_' + referrer;
+                        const refCount = localStorage.getItem(refKey) || 0;
+                        localStorage.setItem(refKey, parseInt(refCount) + 1);
+                        
+                        // Special tracking for X/Twitter traffic
+                        if (referrer.includes('x.com') || referrer.includes('twitter.com')) {
+                            const xTraffic = localStorage.getItem('cc_x_traffic') || 0;
+                            localStorage.setItem('cc_x_traffic', parseInt(xTraffic) + 1);
+                        }
+                    }
+                }
+            };
+            
+            // Initialize analytics when page loads
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', analytics.init.bind(analytics));
+            } else {
+                analytics.init();
+            }
+        })();
+    </script>
+    
     <script src="script.js"></script>
 </body>
 </html>
