@@ -294,6 +294,38 @@ main {
     color: white;
 }
 
+.status.completed {
+    background: #38a169;
+    color: white;
+}
+
+/* Project Details Styles */
+.project-details {
+    margin-top: 1.5rem;
+}
+
+.tech-stack {
+    margin-bottom: 1rem;
+}
+
+.tech-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-features p {
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-style: italic;
+}
+
 /* Interactive Demo Styles */
 .interactive-demo-card {
     grid-column: 1 / -1; /* Make it span full width */
@@ -1231,5 +1263,290 @@ html {
     .collab-item {
         width: 100%;
         justify-content: center;
+    }
+}
+
+/* ===== ART GALLERY SECTION STYLES ===== */
+
+.art-gallery {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 4rem 0;
+}
+
+.art-gallery h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.gallery-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin-bottom: 3rem;
+    font-style: italic;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.art-showcase {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+}
+
+.featured-artwork {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.artwork-container {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #f7fafc;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.artwork-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.artwork-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.artwork-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+}
+
+.artwork-container:hover .artwork-overlay {
+    opacity: 1;
+}
+
+.artwork-info {
+    text-align: center;
+    color: white;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.artwork-container:hover .artwork-info {
+    transform: translateY(0);
+}
+
+.artwork-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.artwork-info p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.artwork-details h3 {
+    font-size: 2rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.artwork-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.artwork-meta span {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.artwork-meta span:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.05);
+}
+
+.artwork-description {
+    color: #4a5568;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.artwork-description p {
+    margin-bottom: 1.5rem;
+}
+
+.artwork-description strong {
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.artwork-process h4 {
+    font-size: 1.3rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.process-steps {
+    list-style: none;
+    padding: 0;
+}
+
+.process-steps li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: #f7fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    color: #4a5568;
+}
+
+.process-steps li:hover {
+    background: #667eea;
+    color: white;
+    transform: translateX(5px);
+}
+
+.step-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.art-statement {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.art-statement::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: float 8s ease-in-out infinite;
+}
+
+.statement-content {
+    position: relative;
+    z-index: 1;
+}
+
+.statement-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.statement-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.attribution {
+    font-size: 1rem;
+    opacity: 0.8;
+    font-weight: 600;
+    margin-bottom: 0 !important;
+}
+
+/* Responsive Design for Art Gallery */
+@media (max-width: 768px) {
+    .art-gallery h2 {
+        font-size: 2rem;
+    }
+    
+    .gallery-intro {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .featured-artwork {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+    }
+    
+    .artwork-container {
+        padding: 1.5rem;
+    }
+    
+    .artwork-details h3 {
+        font-size: 1.6rem;
+    }
+    
+    .artwork-meta {
+        justify-content: center;
+    }
+    
+    .process-steps li {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .art-statement {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+    
+    .statement-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .statement-content p {
+        font-size: 1rem;
     }
 }
