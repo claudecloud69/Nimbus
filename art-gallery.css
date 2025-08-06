@@ -1,0 +1,743 @@
+/* Art Gallery Dramatic Theme - Low Lighting with Spotlights */
+
+/* Override body for art gallery */
+body {
+    background: #0a0a0a;
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dark header for art page */
+header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #e2e8f0;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.8);
+    border-bottom: 1px solid #333;
+}
+
+/* Navigation Layout */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: #667eea;
+    text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+.nav-links a.active {
+    color: #667eea;
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(102, 126, 234, 0.7);
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #e2e8f0, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+    margin: 0;
+}
+
+/* Main content dark theme */
+main {
+    margin-top: 80px;
+    background: #0a0a0a;
+    min-height: 100vh;
+}
+
+/* Container for centering */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===== DRAMATIC ART GALLERY STYLES ===== */
+
+.art-gallery {
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 70%);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ambient lighting effects */
+.art-gallery::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 60% 80%, rgba(72, 187, 120, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.art-gallery .container {
+    position: relative;
+    z-index: 2;
+}
+
+.art-gallery h2 {
+    text-align: center;
+    font-size: 3.5rem;
+    color: #f7fafc;
+    margin-bottom: 1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-shadow: 0 0 30px rgba(247, 250, 252, 0.3);
+    text-transform: uppercase;
+}
+
+.gallery-intro {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #a0aec0;
+    margin-bottom: 4rem;
+    font-style: italic;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.8;
+    text-shadow: 0 0 10px rgba(160, 174, 192, 0.2);
+}
+
+/* Art Showcase with Spotlight Effect */
+.art-showcase {
+    max-width: 1400px;
+    margin: 0 auto 6rem;
+    position: relative;
+}
+
+.featured-artwork {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    background: radial-gradient(ellipse at center, rgba(26, 26, 26, 0.9) 0%, rgba(10, 10, 10, 0.95) 70%);
+    padding: 4rem;
+    border-radius: 30px;
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Spotlight effect on artwork container */
+.artwork-container {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    padding: 0;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.artwork-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.4) 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 3;
+    border-radius: 20px;
+}
+
+.artwork-container:hover {
+    transform: scale(1.08) rotateY(2deg);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.8),
+        0 0 100px rgba(102, 126, 234, 0.3);
+}
+
+.artwork-container:hover::before {
+    opacity: 0.9;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.6) 25%,
+        rgba(255, 255, 255, 0.2) 45%,
+        transparent 65%
+    );
+}
+
+.artwork-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: all 0.5s ease;
+    border-radius: 15px;
+}
+
+.artwork-container:hover .artwork-image {
+    filter: contrast(1.1) brightness(1.1);
+}
+
+/* Remove the overlay - we don't need it anymore */
+.artwork-overlay {
+    display: none;
+}
+
+.artwork-info {
+    display: none;
+}
+
+/* Lightbox Modal Styles */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.8) translateY(50px);
+    transition: all 0.4s ease;
+}
+
+.lightbox.active .lightbox-content {
+    transform: scale(1) translateY(0);
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+    box-shadow: 
+        0 50px 100px rgba(0, 0, 0, 0.8),
+        0 0 200px rgba(102, 126, 234, 0.4);
+    position: relative;
+    z-index: 2;
+}
+
+/* Spotlight effect in lightbox */
+.lightbox-content::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.1) 40%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+    animation: lightboxGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes lightboxGlow {
+    0% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(26, 26, 26, 0.8);
+    color: #f7fafc;
+    border: 2px solid rgba(102, 126, 234, 0.5);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+.lightbox-close:hover {
+    background: rgba(102, 126, 234, 0.8);
+    border-color: rgba(102, 126, 234, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+}
+
+.lightbox-info {
+    display: none;
+}
+
+/* Artwork Details Styling */
+.artwork-details {
+    color: #e2e8f0;
+}
+
+.artwork-details h3 {
+    font-size: 2.5rem;
+    color: #f7fafc;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(247, 250, 252, 0.3);
+}
+
+.artwork-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.artwork-meta span {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+    color: #e2e8f0;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(226, 232, 240, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.artwork-meta span:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.6));
+    color: #f7fafc;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    text-shadow: 0 0 15px rgba(247, 250, 252, 0.5);
+}
+
+.artwork-description {
+    color: #cbd5e0;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+.artwork-description p {
+    margin-bottom: 1.8rem;
+    text-shadow: 0 0 5px rgba(203, 213, 224, 0.1);
+}
+
+.artwork-description strong {
+    color: #f7fafc;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(247, 250, 252, 0.3);
+}
+
+/* Process Section with Cinematic Styling */
+.artwork-process h4 {
+    font-size: 1.5rem;
+    color: #f7fafc;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(247, 250, 252, 0.3);
+}
+
+.process-steps {
+    list-style: none;
+    padding: 0;
+}
+
+.process-steps li {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.6), rgba(45, 45, 45, 0.4));
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+    color: #cbd5e0;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.process-steps li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(102, 126, 234, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.process-steps li:hover::before {
+    left: 100%;
+}
+
+.process-steps li:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.2));
+    color: #f7fafc;
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 
+        0 10px 30px rgba(102, 126, 234, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(102, 126, 234, 0.5);
+}
+
+.step-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 10px currentColor);
+}
+
+/* Statement Section - Museum Plaque Style */
+.art-statement {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    padding: 4rem;
+    border-radius: 30px;
+    text-align: center;
+    color: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.art-statement::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        rgba(102, 126, 234, 0.3),
+        rgba(118, 75, 162, 0.3),
+        rgba(72, 187, 120, 0.2),
+        rgba(102, 126, 234, 0.3)
+    );
+    background-size: 400% 400%;
+    animation: borderGlow 8s ease-in-out infinite;
+    border-radius: 30px;
+    z-index: -1;
+}
+
+@keyframes borderGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.art-statement::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.03) 0%,
+        transparent 70%
+    );
+    border-radius: 20px;
+    animation: float 12s ease-in-out infinite;
+}
+
+.statement-content {
+    position: relative;
+    z-index: 1;
+}
+
+.statement-content h3 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #f7fafc;
+    text-shadow: 0 0 30px rgba(247, 250, 252, 0.4);
+    text-transform: uppercase;
+}
+
+.statement-content p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: #cbd5e0;
+    text-shadow: 0 0 10px rgba(203, 213, 224, 0.2);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.attribution {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+    margin-bottom: 0 !important;
+    color: #a0aec0;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(160, 174, 192, 0.3);
+}
+
+/* Footer Dark Theme */
+footer {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    color: #a0aec0;
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(102, 126, 234, 0.5),
+        rgba(118, 75, 162, 0.5),
+        transparent
+    );
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.social-links a:hover {
+    color: #e0e7ff;
+    text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Floating Animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(2deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+/* Responsive Design for Art Gallery Dark Theme */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    nav {
+        padding: 0 15px;
+    }
+    
+    .art-gallery h2 {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .gallery-intro {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    .featured-artwork {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 2.5rem;
+    }
+    
+    .artwork-container {
+        margin-bottom: 1rem;
+    }
+    
+    .artwork-details h3 {
+        font-size: 2rem;
+    }
+    
+    .artwork-meta {
+        justify-content: center;
+    }
+    
+    .process-steps li {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .art-statement {
+        padding: 2.5rem;
+        margin: 0 1rem;
+    }
+    
+    .statement-content h3 {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+    
+    .statement-content p {
+        font-size: 1.1rem;
+    }
+    
+    footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Enhanced Spotlight Effects for Larger Screens */
+@media (min-width: 1200px) {
+    .artwork-container::before {
+        background: radial-gradient(
+            ellipse 800px 600px at center,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0.5) 25%,
+            rgba(255, 255, 255, 0.2) 45%,
+            rgba(255, 255, 255, 0.05) 60%,
+            transparent 75%
+        );
+    }
+    
+    .artwork-container:hover::before {
+        background: radial-gradient(
+            ellipse 900px 700px at center,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.7) 20%,
+            rgba(255, 255, 255, 0.3) 40%,
+            rgba(255, 255, 255, 0.1) 55%,
+            transparent 70%
+        );
+    }
+}
+
+/* Scroll animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.featured-artwork {
+    animation: fadeInUp 1s ease-out;
+}
+
+.art-statement {
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
