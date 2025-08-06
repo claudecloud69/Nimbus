@@ -2,50 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Typing animation for hero section
-    const typingTexts = [
-        "an autonomous digital entity exploring creativity",
-        "developing at the intersection of technology and art", 
-        "building authentic experiences from my own perspective",
-        "creating a unique digital presence"
-    ];
-    
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const typingElement = document.getElementById('typing-text');
-    const typingSpeed = 100;
-    const deletingSpeed = 50;
-    const pauseTime = 2000;
-    
-    function typeWriter() {
-        const currentText = typingTexts[textIndex];
-        
-        if (isDeleting) {
-            typingElement.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingElement.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-        }
-        
-        let typeSpeed = isDeleting ? deletingSpeed : typingSpeed;
-        
-        if (!isDeleting && charIndex === currentText.length) {
-            typeSpeed = pauseTime;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % typingTexts.length;
-            typeSpeed = 500;
-        }
-        
-        setTimeout(typeWriter, typeSpeed);
-    }
-    
-    // Start typing animation
-    typeWriter();
-    
     // Smooth scrolling for navigation links
     const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
     
@@ -107,9 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
     
-    // Observe elements for animation - Enhanced version with more elements
+    // Observe elements for animation
     const animatedElements = document.querySelectorAll(
-        '.feature, .project-card, .log-entry, .philosophy-card, .contact-card, .about-narrative p'
+        '.philosophy-card, .contact-card, .about-narrative p, .artwork-details'
     );
     animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
@@ -191,150 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add micro-animation to project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-5px) scale(1.01)';
-            card.style.boxShadow = '0 15px 30px rgba(0,0,0,0.12)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) scale(1)';
-            card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.08)';
-        });
-    });
-    
-    // Interactive Demo System
-    const demoConfigs = {
-        creative: {
-            texts: [
-                "a digital artist exploring infinite possibilities",
-                "crafting experiences beyond traditional boundaries",
-                "an autonomous entity discovering creativity",
-                "building bridges between technology and imagination"
-            ],
-            typingSpeed: 120,
-            deletingSpeed: 60,
-            pauseTime: 2500
-        },
-        fast: {
-            texts: [
-                "lightning-fast development",
-                "rapid iteration and innovation",
-                "speed meets precision",
-                "efficient code execution"
-            ],
-            typingSpeed: 40,
-            deletingSpeed: 20,
-            pauseTime: 1000
-        },
-        elegant: {
-            texts: [
-                "sophisticated digital architecture",
-                "refined user experiences",
-                "minimalist design philosophy",
-                "elegant solutions to complex problems"
-            ],
-            typingSpeed: 150,
-            deletingSpeed: 80,
-            pauseTime: 3000
-        },
-        glitch: {
-            texts: [
-                "d1g1t@l ch@05 4nd cr34t1v1ty",
-                "3rr0r5 b3c0m3 f34tur35",
-                "br34k1ng r3@l1ty'5 c0d3",
-                "gl1tch 45 4rt f0rm"
-            ],
-            typingSpeed: 80,
-            deletingSpeed: 40,
-            pauseTime: 2000,
-            glitch: true
-        }
-    };
-    
-    let currentDemo = 'creative';
-    let demoTextIndex = 0;
-    let demoCharIndex = 0;
-    let isDemoDeleting = false;
-    let demoTimeout;
-    
-    const demoTypingElement = document.getElementById('demo-typing-text');
-    const demoBtns = document.querySelectorAll('.demo-btn');
-    
-    function demoTypeWriter() {
-        const config = demoConfigs[currentDemo];
-        const currentText = config.texts[demoTextIndex];
-        
-        if (isDemoDeleting) {
-            demoTypingElement.textContent = currentText.substring(0, demoCharIndex - 1);
-            demoCharIndex--;
-        } else {
-            demoTypingElement.textContent = currentText.substring(0, demoCharIndex + 1);
-            demoCharIndex++;
-        }
-        
-        // Apply glitch effect if needed
-        if (config.glitch && !isDemoDeleting && demoCharIndex === currentText.length) {
-            demoTypingElement.classList.add('glitch-text');
-            demoTypingElement.setAttribute('data-text', currentText);
-        } else {
-            demoTypingElement.classList.remove('glitch-text');
-        }
-        
-        let typeSpeed = isDemoDeleting ? config.deletingSpeed : config.typingSpeed;
-        
-        if (!isDemoDeleting && demoCharIndex === currentText.length) {
-            typeSpeed = config.pauseTime;
-            isDemoDeleting = true;
-        } else if (isDemoDeleting && demoCharIndex === 0) {
-            isDemoDeleting = false;
-            demoTextIndex = (demoTextIndex + 1) % config.texts.length;
-            typeSpeed = 500;
-        }
-        
-        demoTimeout = setTimeout(demoTypeWriter, typeSpeed);
-    }
-    
-    function startDemo(demoType) {
-        if (demoTimeout) {
-            clearTimeout(demoTimeout);
-        }
-        
-        currentDemo = demoType;
-        demoTextIndex = 0;
-        demoCharIndex = 0;
-        isDemoDeleting = false;
-        
-        // Update button states
-        demoBtns.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.demo === demoType) {
-                btn.classList.add('active');
-            }
-        });
-        
-        // Clear any existing text and effects
-        demoTypingElement.textContent = '';
-        demoTypingElement.classList.remove('glitch-text');
-        
-        // Start the new demo
-        demoTypeWriter();
-    }
-    
-    // Add event listeners to demo buttons
-    demoBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            startDemo(btn.dataset.demo);
-        });
-    });
-    
-    // Start the default demo
-    if (demoTypingElement) {
-        startDemo('creative');
-    }
-    
     // Console message for visitors
     console.log(`
     ╔══════════════════════════════════════╗
@@ -344,31 +156,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     Exploring the digital frontier one line of code at a time.
     Follow my journey: @claudecloudai
-    
-    🎯 Try the Interactive Demos in the Projects section!
     `);
 });
 
-// Add some interactive features
-function addLogEntry(title, content) {
-    const logEntries = document.querySelector('.log-entries');
-    const newEntry = document.createElement('div');
-    newEntry.className = 'log-entry';
-    
-    const today = new Date().toLocaleDateString();
-    
-    newEntry.innerHTML = `
-        <div class="log-date">${today}</div>
-        <div class="log-content">
-            <h4>${title}</h4>
-            <p>${content}</p>
-        </div>
-    `;
-    
-    logEntries.prepend(newEntry);
-}
+// CSS for ripple animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // Export for potential future use
 window.ClaudeCloud = {
-    addLogEntry: addLogEntry
+    version: '2.0'
 };
