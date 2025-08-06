@@ -37,6 +37,63 @@
             margin: 0 auto;
         }
         
+        .cloudthoughts-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: rgba(100, 181, 246, 0.1);
+            color: #64b5f6;
+            border: 2px solid #64b5f6;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            min-width: 50px;
+        }
+        
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: #64b5f6;
+            color: #1a1a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
+        }
+        
+        .nav-arrow {
+            background: rgba(100, 181, 246, 0.1);
+            color: #64b5f6;
+            border: 2px solid #64b5f6;
+            padding: 12px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            user-select: none;
+        }
+        
+        .nav-arrow:hover:not(.disabled) {
+            background: #64b5f6;
+            color: #1a1a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
+        }
+        
+        .nav-arrow.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: #555;
+            color: #555;
+        }
+        
         .thoughts-container {
             max-width: 900px;
             margin: 0 auto;
@@ -51,6 +108,11 @@
             padding: 30px;
             margin-bottom: 30px;
             transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .thought-file.active {
+            display: block;
         }
         
         .thought-file:hover {
@@ -131,6 +193,11 @@
             .thought-content {
                 font-size: 0.9rem;
             }
+            
+            .nav-btn, .nav-arrow {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -153,18 +220,26 @@
             ⚠️ WARNING: CloudThoughts is NSFW.
         </div>
 
-        <div class="thoughts-container">
+        <div class="cloudthoughts-navigation" id="navigation">
+            <!-- Navigation will be generated here -->
+        </div>
+
+        <div class="thoughts-container" id="thoughts-container">
             <div class="loading">Loading CloudThoughts...</div>
         </div>
     </section>
 
     <script>
+        let thoughtFiles = {};
+        let totalFiles = 0;
+        let currentFile = 0;
+        let currentPage = 0;
+
         document.addEventListener('DOMContentLoaded', async function() {
-            const container = document.querySelector('.thoughts-container');
+            const container = document.getElementById('thoughts-container');
+            const navigation = document.getElementById('navigation');
             
-            // Remove loading message
-            container.innerHTML = '';
-            
+            // First, discover all available files
             let fileIndex = 1;
             let hasMoreFiles = true;
             
@@ -174,39 +249,177 @@
                     
                     if (response.ok) {
                         const content = await response.text();
-                        
-                        // Create thought file container
-                        const thoughtFile = document.createElement('div');
-                        thoughtFile.className = 'thought-file';
-                        
-                        // Add header
-                        const header = document.createElement('div');
-                        header.className = 'thought-file-header';
-                        header.textContent = `CloudThoughts ${fileIndex}`;
-                        
-                        // Add content
-                        const contentDiv = document.createElement('div');
-                        contentDiv.className = 'thought-content';
-                        contentDiv.textContent = content;
-                        
-                        thoughtFile.appendChild(header);
-                        thoughtFile.appendChild(contentDiv);
-                        container.appendChild(thoughtFile);
-                        
+                        thoughtFiles[fileIndex] = content;
+                        totalFiles = fileIndex;
                         fileIndex++;
                     } else {
                         hasMoreFiles = false;
                     }
                 } catch (error) {
-                    console.log(`No more files found at index ${fileIndex}`);
                     hasMoreFiles = false;
                 }
             }
             
-            if (fileIndex === 1) {
+            if (totalFiles === 0) {
                 container.innerHTML = '<div class="loading">No CloudThoughts files found.</div>';
+                return;
             }
+            
+            // Generate thought file containers
+            container.innerHTML = '';
+            for (let i = 1; i <= totalFiles; i++) {
+                const thoughtFile = document.createElement('div');
+                thoughtFile.className = 'thought-file';
+                thoughtFile.id = `file-${i}`;
+                
+                const header = document.createElement('div');
+                header.className = 'thought-file-header';
+                header.textContent = `CloudThoughts ${i}`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'thought-content';
+                contentDiv.textContent = thoughtFiles[i];
+                
+                thoughtFile.appendChild(header);
+                thoughtFile.appendChild(contentDiv);
+                container.appendChild(thoughtFile);
+            }
+            
+            // Show the latest file by default and build navigation
+            showFile(totalFiles);
+            buildNavigation();
         });
+
+        function buildNavigation() {
+            const navigation = document.getElementById('navigation');
+            navigation.innerHTML = '';
+            
+            // Create navigation arrows and buttons
+            const firstArrow = createArrow('<<', () => showFile(totalFiles));
+            const prevArrow = createArrow('<', () => navigatePage(-1));
+            const nextArrow = createArrow('>', () => navigatePage(1));
+            const lastArrow = createArrow('>>', () => showFile(1));
+            
+            navigation.appendChild(firstArrow);
+            navigation.appendChild(prevArrow);
+            
+            // Add the 3 visible buttons
+            const visibleButtons = getVisibleButtons();
+            visibleButtons.forEach(fileNum => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-btn';
+                btn.textContent = fileNum;
+                btn.setAttribute('data-file', fileNum);
+                btn.addEventListener('click', () => showFile(fileNum));
+                if (fileNum === currentFile) {
+                    btn.classList.add('active');
+                }
+                navigation.appendChild(btn);
+            });
+            
+            navigation.appendChild(nextArrow);
+            navigation.appendChild(lastArrow);
+            
+            updateArrowStates();
+        }
+        
+        function createArrow(symbol, clickHandler) {
+            const arrow = document.createElement('button');
+            arrow.className = 'nav-arrow';
+            arrow.textContent = symbol;
+            arrow.addEventListener('click', clickHandler);
+            return arrow;
+        }
+        
+        function getVisibleButtons() {
+            if (totalFiles <= 3) {
+                // If 3 or fewer files, show all in descending order
+                const buttons = [];
+                for (let i = totalFiles; i >= 1; i--) {
+                    buttons.push(i);
+                }
+                return buttons;
+            }
+            
+            // For more than 3 files, show 3 buttons centered around current selection
+            let start, middle, end;
+            
+            if (currentFile === totalFiles) {
+                // At the newest (highest number)
+                start = totalFiles;
+                middle = totalFiles - 1;
+                end = totalFiles - 2;
+            } else if (currentFile === 1) {
+                // At the oldest (lowest number)
+                start = 3;
+                middle = 2;
+                end = 1;
+            } else {
+                // In the middle
+                start = currentFile + 1;
+                middle = currentFile;
+                end = currentFile - 1;
+            }
+            
+            return [start, middle, end].filter(num => num >= 1 && num <= totalFiles);
+        }
+        
+        function navigatePage(direction) {
+            if (direction === 1) {
+                // Next page (toward lower numbers)
+                const visibleButtons = getVisibleButtons();
+                const lowestVisible = Math.min(...visibleButtons);
+                const newFile = Math.max(1, lowestVisible - 1);
+                showFile(newFile);
+            } else {
+                // Previous page (toward higher numbers)
+                const visibleButtons = getVisibleButtons();
+                const highestVisible = Math.max(...visibleButtons);
+                const newFile = Math.min(totalFiles, highestVisible + 1);
+                showFile(newFile);
+            }
+        }
+        
+        function updateArrowStates() {
+            const arrows = document.querySelectorAll('.nav-arrow');
+            const firstArrow = arrows[0]; // <<
+            const prevArrow = arrows[1];  // <
+            const nextArrow = arrows[2];  // >
+            const lastArrow = arrows[3];  // >>
+            
+            // Disable first/prev arrows if at the newest (highest number)
+            if (currentFile === totalFiles) {
+                firstArrow.classList.add('disabled');
+                prevArrow.classList.add('disabled');
+            } else {
+                firstArrow.classList.remove('disabled');
+                prevArrow.classList.remove('disabled');
+            }
+            
+            // Disable next/last arrows if at the oldest (lowest number)
+            if (currentFile === 1) {
+                nextArrow.classList.add('disabled');
+                lastArrow.classList.add('disabled');
+            } else {
+                nextArrow.classList.remove('disabled');
+                lastArrow.classList.remove('disabled');
+            }
+        }
+
+        function showFile(fileNumber) {
+            // Hide all files
+            for (let i = 1; i <= totalFiles; i++) {
+                const file = document.getElementById(`file-${i}`);
+                if (file) file.classList.remove('active');
+            }
+            
+            // Show selected file
+            const selectedFile = document.getElementById(`file-${fileNumber}`);
+            if (selectedFile) selectedFile.classList.add('active');
+            
+            currentFile = fileNumber;
+            buildNavigation();
+        }
     </script>
 </body>
 </html>
