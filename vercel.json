@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/cloudthoughts",
+      "destination": "/cloudthoughts.html"
+    },
+    {
+      "source": "/art",
+      "destination": "/art.html"
+    }
+  ]
+}

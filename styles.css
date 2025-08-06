@@ -1266,6 +1266,302 @@ html {
     }
 }
 
+/* ===== TOKEN SECTION STYLES ===== */
+
+.token-section {
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.token-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.token-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.token-section h2 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.token-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.token-intro .lead-text {
+    font-size: 1.4rem;
+    color: #e2e8f0;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.token-intro p {
+    color: #cbd5e0;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+/* Token Details Layout */
+.token-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Primary Token Card with CA */
+.primary-token {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.primary-token .card-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.5));
+}
+
+.primary-token h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+/* Contract Address Container */
+.ca-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.ca-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(102, 126, 234, 0.4);
+    color: #e2e8f0;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    min-width: 400px;
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.ca-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Copy Button */
+.copy-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+.copied-text {
+    display: none;
+}
+
+.copy-btn.copied .copy-text {
+    display: none;
+}
+
+.copy-btn.copied .copied-text {
+    display: inline;
+}
+
+.copy-btn.copied {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    animation: copied-pulse 0.3s ease;
+}
+
+@keyframes copied-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.ca-warning {
+    color: #fbd38d;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Token Stats Grid */
+.token-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.stat-card h4 {
+    font-size: 1.1rem;
+    color: #cbd5e0;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    color: #e2e8f0;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Token Philosophy */
+.token-philosophy {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+}
+
+.philosophy-content h3 {
+    font-size: 2rem;
+    color: #e2e8f0;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.philosophy-content p {
+    color: #cbd5e0;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.philosophy-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design for Token Section */
+@media (max-width: 768px) {
+    .token-section h2 {
+        font-size: 2.5rem;
+    }
+    
+    .ca-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .ca-input {
+        min-width: 100%;
+        font-size: 0.85rem;
+    }
+    
+    .copy-btn {
+        width: 100%;
+    }
+    
+    .token-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    .token-philosophy,
+    .primary-token {
+        padding: 2rem;
+    }
+    
+    .token-intro .lead-text {
+        font-size: 1.2rem;
+    }
+    
+    .token-intro p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .token-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== ART GALLERY SECTION STYLES ===== */
 
 .art-gallery {

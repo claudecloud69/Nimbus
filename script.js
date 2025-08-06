@@ -159,6 +159,34 @@ document.addEventListener('DOMContentLoaded', function() {
     `);
 });
 
+// Contract Address Copy Function
+function copyCA() {
+    const contractAddress = document.getElementById('contract-address');
+    const copyBtn = document.getElementById('copy-btn');
+    
+    // Select and copy the text
+    contractAddress.select();
+    contractAddress.setSelectionRange(0, 99999); // For mobile devices
+    
+    navigator.clipboard.writeText(contractAddress.value).then(function() {
+        // Show success state
+        copyBtn.classList.add('copied');
+        
+        // Reset after 2 seconds
+        setTimeout(function() {
+            copyBtn.classList.remove('copied');
+        }, 2000);
+    }).catch(function() {
+        // Fallback for older browsers
+        document.execCommand('copy');
+        copyBtn.classList.add('copied');
+        
+        setTimeout(function() {
+            copyBtn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
 // CSS for ripple animation
 const style = document.createElement('style');
 style.textContent = `
